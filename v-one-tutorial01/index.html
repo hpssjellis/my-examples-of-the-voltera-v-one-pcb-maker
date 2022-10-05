@@ -1,0 +1,336 @@
+
+<h1>Multi-Language EdgeImpulse Tutorial by Rocksetta</h1>
+
+
+<h6> version 2.2.0-155</h6>
+
+
+This demo at <a href="https://hpssjellis.github.io/multi-language-edgeimpulse-tutorial-vision-cell-phone/#top">https://hpssjellis.github.io/multi-language-edgeimpulse-tutorial-vision-cell-phone/</a><br><br>
+
+
+The Github Repository is at <a href="https://github.com/hpssjellis/multi-language-edgeimpulse-tutorial-vision-cell-phone">https://github.com/hpssjellis/multi-language-edgeimpulse-tutorial-vision-cell-phone</a><br><br>
+
+
+Number of Slides: <input type="text" id="myCountLinks" size="6" value="15" >. List of seconds per slide: <input type="text" id="myCountMax" size="30" value="20,20" >   Can be a list of seconds example: 17, 20, 24, 20 The last number continues.
+ <br><br>
+ 
+
+Choose the language: <div id="google_translate_element"></div>
+
+<script type="text/javascript">
+document.myVoiceVar = 7 
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script><br>
+
+Then choose the Speaker: <Select id="mySelect01" onchange="{
+  document.getElementById('myVoiceNum').value =  this.value
+  document.getElementById('myNumberSpeak').click()
+}"></select><br>
+
+<div id="myDiv01">...</div>
+Voice number: <input id="myVoiceNum" type=number  style="width: 5em" value=3> 
+<input id="myNumberSpeak" type="button" value="Speak!" onclick="{  
+    let myV = responsiveVoice.getVoices()[document.getElementById('myVoiceNum').value].name
+    document.getElementById('myDiv01').innerHTML =  myV
+    responsiveVoice.speak(document.getElementById('myMain').innerText, myV, {pitch: 1, rate: 1, volume : 1});   
+}"> 
+
+
+
+
+
+
+<br><br>
+
+
+
+ 
+ 
+<h2>This section readers have programmed autoscroll </h2> 
+ 
+ <input type=button value="Mr. Ellis Reading in English" onclick="{ 
+   document.getElementById('myCountMax').value = '18,23,25,18,16,18,32,14,33,16,25,43,30,51,10';  
+   mySetup();                                             
+   myAudio01 = new Audio('recorded-english.m4a');
+   myAudio01.play(); 
+   carousel();                                                
+}">
+
+ <input type=button value="Fernando-Spanish" onclick="{ 
+   document.getElementById('myCountMax').value = '23,23,33,22,36,22,45,21,44,20,26,51,40,74,97';  
+   mySetup();                                             
+   myAudio01 = new Audio('media/fernando-spanish.mp3');
+   myAudio01.play(); 
+   carousel();                                                
+}">
+
+<h2>This section is for static webpage conversions not supported by Google</h2> 
+
+No pages yet!
+
+<hr>
+ 
+<div id="myNumSlides" style=" position:sticky; top:0px; left:20px; height:25px; "> ...</div>  <br>
+
+  
+
+
+<div id="myStick"  style=" position:sticky; top:30px; display:inline; ">
+ 
+ <input type=button value="Start-No-Sound" onclick="{
+   mySetup()
+   carousel();  
+}">
+ 
+ 
+ 
+  <input type=button value="Rewind" onclick="{
+   myIndex = 0;  
+   clearInterval(myLooper);
+   clearInterval(myCounting);
+   if (myAudio01.paused && myAudio01.currentTime > 0 && !myAudio01.ended) {
+      } else {
+         myAudio01.pause();
+     }
+}">   
+
+ <input type=button value="-" onclick="{
+   clearInterval(myLooper);
+   clearInterval(myCounting);
+   myIndex -= 1;    
+   window.location.href='#'+myIndex;
+}">   
+  
+<input type=button value="+" onclick="{
+  clearInterval(myLooper);
+  clearInterval(myCounting);
+  myIndex += 1;  
+  window.location.href='#'+myIndex;
+}"> 
+  
+<input type=button value="Back" onclick="{
+   myIndex = myIndex - 2;    
+   if (myIndex <= 0){myIndex=0};                                      
+   myNext();
+}">   
+  
+<input type=button value="Next" onclick="{
+   myNext();
+}"> 
+ 
+    
+  
+ <input id="myPause" type=button value="Pause" onclick="{ 
+   clearInterval(myLooper);
+   clearInterval(myCounting);
+   if (this.value == 'Pause'){                                                     
+       this.value = 'Play / Pause'; 
+       if (myAudio01.paused && myAudio01.currentTime > 0 && !myAudio01.ended) {
+      } else {
+         myAudio01.pause();
+     }
+   } else {    
+     myIndex -= 1; 
+     myCountUp += 1;
+     carousel();                                                 
+     this.value = 'Pause';  
+     if (myAudio01.paused && myAudio01.currentTime > 0 && !myAudio01.ended) {
+         myAudio01.play();
+      }                                                    
+   }
+}"> 
+ 
+<input type=button value="Hide" onclick="{
+   document.getElementById('myStick').style.display = 'none';
+}"> 
+  <input type=button value="TOP" onclick="{ 
+   window.location.href='#top'; 
+}">  
+  
+ </div>
+
+
+<h2>Index:</h2>
+<ul>
+  <li><a href="#1">Page 1: Voltera.io V-One What is it!</a> 
+  <li><a href="#2">Page2: Getting Started</a> 
+  <li><a href="#3"></a> 
+  <li><a href="#4"></a> 
+  <li><a href="#15">Page 15: The End</a> 
+</ul>
+
+
+
+
+
+<div id="myMain">
+
+<h3><a name="1" href="#1">Page 1</a> </h3>
+<h2>Voltera.io V-One What is it!</h2>
+  
+  
+
+First login or signup to <a href="https://edgeimpulse.com/">edgeImpulse.com</a> and then create a new Project<br>
+
+<img src="https://user-images.githubusercontent.com/5605614/190931142-55689c3c-124b-4558-ba9c-d025ef148461.png" title="EdgeImpulse login or setup" width=400 /> <img src="https://user-images.githubusercontent.com/5605614/190931666-39a92ca7-e8d6-435c-86ac-ef1ed825008d.png" title="Create new project" width=500 />
+<br><br>
+
+<hr>
+  
+  
+<h3><a name="2" href="#2">Page 2</a> </h3>
+<h2>Getting Started</h2>
+  
+  
+
+First login or signup to <a href="https://edgeimpulse.com/">edgeImpulse.com</a> and then create a new Project<br>
+
+<img src="https://user-images.githubusercontent.com/5605614/190931142-55689c3c-124b-4558-ba9c-d025ef148461.png" title="EdgeImpulse login or setup" width=400 /> <img src="https://user-images.githubusercontent.com/5605614/190931666-39a92ca7-e8d6-435c-86ac-ef1ed825008d.png" title="Create new project" width=500 />
+
+<br><br>
+<hr>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<hr> 
+<h3><a  name="15" href="#15">15</a>  </h3>
+<h2>End of presentation </h2>
+</div>   <!-- end of myMain for google translation div -->
+
+ 
+
+<a href="#top">Top of page</a>
+
+
+
+
+
+
+
+
+
+  <h2>By Jeremy Ellis Twitter <a href="https://twitter.com/rocksetta">@Rocksetta<a/> Use at your own Risk!</h2>
+
+
+Note: 
+<ol>
+ 
+    <li> Old Multi-Language ML Presentation <a href="https://hpssjellis.github.io/multi-language-edgeimpulse-tutorial-vision-cell-phone/">here</a>   
+    <li> Old ML presentation <a href="https://hpssjellis.github.io/my-robotics-machine-learning-teaching-lightning-talk-pecha-kucha/">here</a> 
+    <li> Old TensorflowJS presentation <a href="https://hpssjellis.github.io/lightening-talk-Pecha-Kucha-tensorflowjs/">here</a>
+    <li> Teacher Presentation Feedback <a href="https://hpssjellis.github.io/jeremy-ellis-tinyML-teacher-feedback-2022/">here</a> 
+    <li> Pecha Kucha template <a href="https://github.com/hpssjellis/pecha-kucha-lightning-talks-template">here</a> 
+</ol><br><br>
+ 
+
+ 
+ <br><br><br><br><br>
+ <hr>
+ 
+
+
+
+
+  
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+  
+ 
+
+
+
+<script>
+ let myIndex = 1;
+ let myLooper = 0;
+ let myCounting = 0;
+ let myMainNum = '10,10';  
+ let myMainNum2 = '10,10'; 
+ let myMainNumLast = 20;
+ let myCountUp = 0;
+ let xSlide = 3;
+ let myAudio01 = new Audio();
+ document.body.style.backgroundColor = "skyblue";
+ 
+ 
+ let myArray = [1,2,3,13,14,16,18,2223,24,29,30,34,37,39,42,43,49,54,57]
+ let myVoiceObject = responsiveVoice.getVoices()
+ let myTemp = ''
+ for (let myLoop=0; myLoop < 50; myLoop++ ){
+    if ( myArray.includes(myLoop) ) {
+       myTemp += '<option value=\''+myLoop + '\'>' + myLoop + ' : ' + myVoiceObject[myLoop].name + '</option>'
+    }
+ }
+ document.getElementById('mySelect01').innerHTML =  myTemp
+ 
+ 
+
+ 
+function mySetup(){
+   document.getElementById('myStick').style.display = 'none';                                                 
+   xSlide  = document.getElementById('myCountLinks').value; 
+   myMainNum = document.getElementById('myCountMax').value.split(','); 
+   myMainNumLast = myMainNum[0]
+   console.log('myMainNum')
+   console.log(myMainNum)
+   console.log('myIndex, myMainNumLast, myMainNum[myIndex]')
+   myAudio01.pause();
+   myAudio01.currentTime = 0;  
+   myIndex = 0;  
+   clearInterval(myLooper);  
+   myCountUp = -1;
+} 
+ 
+function carousel() {
+  clearInterval(myCounting);
+  myCountUp = -1;
+  var i;
+  myIndex++;
+  if (myIndex > xSlide) {myIndex = xSlide};    
+  window.location.href='#'+myIndex;
+  if (Number.isInteger( parseInt(myMainNum[myIndex-1]) ) ) {
+     myMainNumLast = parseInt(myMainNum[myIndex-1]) 
+  }  
+  console.log(myIndex +', '+ myMainNumLast +', '+  myMainNum[myIndex-1])
+  myCountDown();
+  myCounting = setInterval(myCountDown, 1000);
+  myLooper = setTimeout(carousel, myMainNumLast*1000); 
+}
+  
+function myCountDown(){
+  myCountUp++;
+  if (myCountUp >= myMainNumLast ) {
+    myCountUp = myMainNumLast;                              
+  }
+  if (myIndex >= xSlide && myMainNumLast == myCountUp){ 
+     document.getElementById("myNumSlides").innerHTML = `&nbsp;&nbsp;&nbsp; Slide ${myIndex} of ${xSlide} slides. ALL DONE <input type=button value="Show"  style="height:25px; " onclick="{document.getElementById('myStick').style.display = 'inline'; }"> `;
+     clearInterval(myCounting);             
+     clearInterval(myLooper);  
+  }
+  else {    
+     document.getElementById("myNumSlides").innerHTML = `&nbsp;&nbsp;&nbsp; Slide ${myIndex} of ${xSlide} slides. ${myMainNumLast-myCountUp} seconds remaining <input type=button value="Show" style="height:25px; " onclick="{document.getElementById('myStick').style.display = 'inline'; }"> `;
+  }
+}
+;
+function myNext(){   
+  xSlide  = document.getElementById('myCountLinks').value; 
+  myMainNum = document.getElementById('myCountMax').value;                        
+  clearInterval(myLooper) ; 
+  carousel();  
+}  
+;
+</script> 
+ 
+ 
+
+ 
+ 
+    
+    
+    
+    
+    
+    
+    
