@@ -55,11 +55,19 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);   
 // U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, PB_6, PB_7,    /* reset=*/ U8X8_PIN_NONE);   // I2C1
 // U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0,  PH_11, PH_12, /* reset=*/ U8X8_PIN_NONE);   // I2C2
 
-
+int myDelay = 1000;   // non-block delay in milliseconds
+unsigned long myStart;
 
 
 
 void setup(void) {
+  myStart = millis();   // set delay
+
+  // Don't declare DAC A0 if you want jit to work.
+  pinMode(1, OUTPUT);  // no D2 so use 2
+  pinMode(2, OUTPUT);  // no D2 so use 2
+  //pinMode(A3, INPUT_PULLDOWN);  // no D2 so use 2
+  pinMode(A3, INPUT);  // no D2 so use 2
   u8g2.begin();
   Serial.begin(115200);
 
@@ -67,80 +75,70 @@ void setup(void) {
   while (!Serial && millis() < 10000 ){
     // do nothing for a bit to connect the monitor if you want
   };  
+  Serial.println();
   Serial.println("Hello PCB testing");
 
   // For DAC pin A0  
-  analogWriteResolution(10); // Set analog out resolution to max, 8bits, 10-bits, 12 bits
-  analogReadResolution(10); // Set analog input resolution to max
+  // analogWriteResolution(10); // Set analog out resolution to max, 8bits, 10-bits, 12 bits
+  // analogReadResolution(10); // Set analog input resolution to max
 
 }
  
 void loop(void) {
-  
-  analogWrite(0, random(523)+500 );  // DAC pin
-  //delay(10);
- /* 
-  String myA0 = "A0: "+String(analogRead(0));
-  int myA0Length = myA0.length() + 1; 
-  char myA0Char[myA0Length];
-  myA0.toCharArray(myA0Char, myA0Length);
-*/
-  String myA1 = "A1: "+String(analogRead(1));
-  int myA1Length = myA1.length() + 1; 
-  char myA1Char[myA1Length];
-  myA1.toCharArray(myA1Char, myA1Length);
-
-  String myA2 = "A2: "+String(analogRead(2));
-  int myA2Length = myA2.length() + 1; 
-  char myA2Char[myA2Length];
-  myA2.toCharArray(myA2Char, myA2Length);
-
-  String myA3 = "A3: "+String(analogRead(3));
-  int myA3Length = myA3.length() + 1; 
-  char myA3Char[myA3Length];
-  myA3.toCharArray(myA3Char, myA3Length);
-
- // Serial.println(myA0);
-  Serial.println(myA1);
-  Serial.println(myA2);
-  Serial.println(myA3);
-
-  
-
+  if ( (millis() - myStart ) >= myDelay) {       
+     myStart = millis();      //  reset the delay time
  
-  u8g2.clearBuffer();                   // clear the internal memory
-  u8g2.setFont(u8g2_font_ncenB08_tr); 
-  // FONTS to try    
-  // u8g2_font_ncenB08_tr           // normal
-  // u8g2_font_u8glib_4_tf          // small
-  // u8g2_font_ncenB18_tr           // bigger
-  // u8g2_font_pieceofcake_mel_tr   // weird
-  // u8g2_font_ncenB08_tr           // skinny
-  // u8g2_font_unifont_t_symbols    // stretched
-  // FONT LIST at 
-  //https://github.com/olikraus/u8g2/wiki/fntlistall
-  
-  // u8g2.setFontDirection(random(3)); // 0, normal, 1,2,3 rotate by 90 degrees
-  u8g2.drawPixel(random(128), random(64));
-  
-  u8g2.drawLine(0,0,  127, 0);        // horizontal top
-  u8g2.drawLine(0,63, 127,63);        // horizontal bottom
-  u8g2.drawLine(127,0,127,63);        // vertical right
-  u8g2.drawLine(1,0,1,63);             // vertical left
+    analogWrite(A0, random(524)+500 );  // DAC pin max 1023 
 
-  u8g2.drawCircle(90,20, random(15)); // Circle center x,y,  random radius
-  u8g2.drawStr(5,10, "Hello" );  // write something to the internal memory
+    analogWrite(A1, random(200)+56 );  // PWM pin max 255
 
- // u8g2.drawStr(5,20, myA0Char);  
-  u8g2.drawStr(5,30, myA1Char);  
-  u8g2.drawStr(5,40, myA2Char);  
-  u8g2.drawStr(5,50, myA3Char);  
+    digitalWrite(2,!digitalRead(2)); // either on or off 1 or 0
+
+
+    String myA2 = "A2: "+String(digitalRead(2));
+    int myA2Length = myA2.length() + 1; 
+    char myA2Char[myA2Length];
+    myA2.toCharArray(myA2Char, myA2Length);
+  
+    String myA3 = "A3: "+String(analogRead(A3));
+    int myA3Length = myA3.length() + 1; 
+    char myA3Char[myA3Length];
+    myA3.toCharArray(myA3Char, myA3Length);
+  
+    Serial.println("-----");
+    Serial.println(myA2);
+    Serial.println(myA3);
+  
     
-  u8g2.sendBuffer();                  // transfer internal memory to the display
-  delay(1000);  
+  
+   
+    u8g2.clearBuffer();                   // clear the internal memory
+    u8g2.setFont(u8g2_font_ncenB08_tr); 
+    // FONTS to try    
+    // u8g2_font_ncenB08_tr           // normal
+    // u8g2_font_u8glib_4_tf          // small
+    // u8g2_font_ncenB18_tr           // bigger
+    // u8g2_font_pieceofcake_mel_tr   // weird
+    // u8g2_font_ncenB08_tr           // skinny
+    // u8g2_font_unifont_t_symbols    // stretched
+    // FONT LIST at 
+    //https://github.com/olikraus/u8g2/wiki/fntlistall
+    
+    // u8g2.setFontDirection(random(3)); // 0, normal, 1,2,3 rotate by 90 degrees
+    u8g2.drawPixel(random(128), random(64));
+    
+    u8g2.drawLine(  0,0,  127,0);        // horizontal top
+    u8g2.drawLine(  0,63, 127,63);        // horizontal bottom
+    u8g2.drawLine(127,0,  127,63);        // vertical right
+    u8g2.drawLine(  1,0,    1,63);            // vertical left
+  
+    u8g2.drawCircle(90,20, random(15)); // Circle center x,y,  random radius
+    u8g2.drawStr(5,10, "Hello" );  // write something to the internal memory
+  
+
+    u8g2.drawStr(5,20, myA2Char);  
+    u8g2.drawStr(5,30, myA3Char);  
+      
+    u8g2.sendBuffer();                  // transfer internal memory to the display
+  } // end timer  
 }
-
-
-
-
-
